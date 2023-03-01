@@ -1,21 +1,22 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "./app/features/counter/counterSlice";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
+  const { num, maxNum } = useSelector(({ counter }) => counter); // ** Object
 
+  const inCrementHandler = () => dispatch(increment());
+  const deCrementHandler = () => dispatch(decrement());
+
+  // ** Action type => Slice Name + Action (Function)
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Redux Toolkit ✅❤😎</h1>
+      <h3>Counter: {num}</h3>
+      <button onClick={inCrementHandler}>Increment</button>
+      <button onClick={deCrementHandler}>Decrement</button>
+      <h3>Max Number: {maxNum}</h3>
     </div>
   );
 }
