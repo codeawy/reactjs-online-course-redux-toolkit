@@ -40,3 +40,24 @@
 .read-the-docs {
   color: #888;
 }
+.grid-cells {
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.grid-cells .cell {
+  border: 1px solid tomato;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.grid-cells .cell:hover {
+  background-color: tomato;
+  color: white;
+}
