@@ -10,7 +10,9 @@ export const totalSlice = createSlice({
   initialState,
   reducers: {
     // TODO
-    addToTotal: (state, action) => {},
+    addToTotal: (state, action) => {
+      state.arr = [...state.arr, action.payload];
+    },
   },
 });
 

@@ -1,24 +1,17 @@
-import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { selectAuth, toggleLoggedIn } from "./app/features/auth/authSlice";
-import { selectCounter } from "./app/features/counter/counterSlice";
-import { addToTotal, selectTotal } from "./app/features/total/totalSlice";
+import { Route, Routes } from "react-router-dom";
+import Products from "./pages/Products";
+import CartPage from "./pages/CartPage";
+import AppLayout from "./layout";
 
 function App() {
-  const dispatch = useDispatch();
-  const { arr } = useSelector(selectTotal);
-
-  const addToTotalHandler = e => dispatch(addToTotal(e.target.innerHTML));
   return (
     <div className="App">
-      <h2>Total: {arr.length ? JSON.stringify(arr.map(i => i)) : JSON.stringify([])}</h2>
-      <div className="grid-cells">
-        {Array.from({ length: 20 }, (_, idx) => (
-          <div className="cell" onClick={addToTotalHandler} key={idx}>
-            {idx + 1}
-          </div>
-        ))}
-      </div>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Products />} />
+          <Route path="cart" element={<CartPage />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
