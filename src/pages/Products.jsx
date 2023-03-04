@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
 import Product from "../components/Product";
-import axios from "axios";
+import { getProductList, selectProducts } from "../app/features/product/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Products = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [productsList, setProductsList] = useState([]);
+  const dispatch = useDispatch();
+  const { isLoading, data, error } = useSelector(selectProducts);
 
   useEffect(() => {
-    (() => {
-      axios
-        .get("https://dummyjson.com/products")
-        .then(res => setProductsList(res.data.products))
-        .catch(err => console.log(err))
-        .finally(() => setIsLoading(false));
-    })();
+    dispatch(getProductList());
   }, []);
 
   if (isLoading) return <h3>Loading...</h3>;
@@ -21,7 +16,7 @@ const Products = () => {
   return (
     <div>
       <div className="m-10 grid grid-cols-grid-layout gap-4">
-        {productsList.map(product => (
+        {data?.products.map(product => (
           <Product key={product.id} product={product} />
         ))}
       </div>

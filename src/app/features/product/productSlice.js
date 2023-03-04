@@ -11,13 +11,12 @@ const initialState = {
   error: null,
 };
 
-export const userLogin = createAsyncThunk("auth/userLogin", async (user, thunkAPI) => {
+export const getProductList = createAsyncThunk("products/getProductList", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
-  // ** TODO Then, Catch
   try {
     // ** Fulfilled
-    const { data } = await axios.post("https://dummyjson.com/auth/login", user);
+    const { data } = await axios.get("https://dummyjson.com/products");
     return data;
   } catch (error) {
     // ** Rejected
@@ -25,24 +24,23 @@ export const userLogin = createAsyncThunk("auth/userLogin", async (user, thunkAP
   }
 });
 
-const authSlice = createSlice({
-  name: "auth",
+const productsSlice = createSlice({
+  name: "products",
   initialState,
   extraReducers: {
-    [userLogin.pending]: state => {
+    [getProductList.pending]: state => {
       state.isLoading = true;
     },
-    [userLogin.fulfilled]: (state, action) => {
-      console.log(action.payload);
+    [getProductList.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
     },
-    [userLogin.rejected]: (state, action) => {
+    [getProductList.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const selectAuth = ({ auth }) => auth;
-export default authSlice.reducer;
+export const selectProducts = ({ products }) => products;
+export default productsSlice.reducer;
